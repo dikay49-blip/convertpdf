@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: pdfixconvert
+    runtime: python
+    buildCommand: |
+      apt-get update -qq && apt-get install -y -qq libmagic1 libpango-1.0-0 libpangoft2-1.0-0 libcairo2 libgdk-pixbuf2.0-0 libffi-dev
+      pip install --upgrade pip
+      pip install -r requirements.txt
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT --workers 2 --timeout 120
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: FORCE_HTTPS
+        value: "true"
+      - key: FLASK_DEBUG
+        value: "false"
+      - key: PYTHON_VERSION
+        value: "3.11.0"
+    autoDeploy: true
+    plan: free
