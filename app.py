@@ -33,7 +33,7 @@ from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, Tabl
 import docx
 from xhtml2pdf import pisa
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder=None)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', os.urandom(32).hex())
 app.config['MAX_CONTENT_LENGTH'] = 20 * 1024 * 1024
 app.config['UPLOAD_FOLDER'] = Path('uploads')
@@ -220,7 +220,14 @@ CONVERTERS = {
 @app.context_processor
 def inject_now():
     return {'now': datetime.utcnow()}
-
+@app.route('/static/<path:filename>')
+def static_files(filename):
+    static_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')
+    mime, _ = mimetypes.guess_type(filename)
+    response = send_from_directory(static_dir, filename)
+    if mime:
+        response.headers['Content-Type'] = mime
+    return response
 @app.route('/')
 def index():
     return render_template('index.html')
