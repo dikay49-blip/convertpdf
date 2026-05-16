@@ -13,8 +13,9 @@ from datetime import datetime
 
 from flask import (
     Flask, render_template, request, send_file,
-    jsonify, abort
+    jsonify, abort, send_from_directory
 )
+import mimetypes
 from flask_talisman import Talisman
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
