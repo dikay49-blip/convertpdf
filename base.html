@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <!-- SEO & Google -->
+  <meta name="description" content="Convertissez vos fichiers en PDF gratuitement et en toute sécurité. Images, Word, texte, HTML → PDF. Aucun fichier conservé sur nos serveurs.">
+  <meta name="keywords" content="convertir PDF, image en PDF, word en PDF, convertisseur PDF gratuit, conversion PDF en ligne">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="PDFix">
+  <link rel="canonical" href="https://pdfixconvert.com/">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="{% block og_title %}PDFix — Conversion PDF instantanée{% endblock %}">
+  <meta property="og:description" content="Convertissez vos fichiers en PDF. Gratuit, sécurisé, aucun stockage.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://pdfixconvert.com/">
+
+  <title>{% block title %}PDFix — Convertisseur PDF gratuit{% endblock %}</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+  <!-- Google AdSense (remplacer ca-pub-XXXXXXXXXXXXXXXX par votre ID) -->
+  <!--
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+  -->
+
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="{{ url_for('index') }}" class="nav-logo">
+        <span class="logo-icon"><i class="bi bi-file-earmark-pdf-fill"></i></span>
+        <span class="logo-text">PDF<span class="logo-accent">ix</span></span>
+      </a>
+      <div class="nav-links">
+        <a href="{{ url_for('index') }}" class="nav-link {% if request.endpoint == 'index' %}active{% endif %}">
+          <i class="bi bi-house-fill"></i> Accueil
+        </a>
+        <a href="{{ url_for('donate') }}" class="nav-link {% if request.endpoint == 'donate' %}active{% endif %}">
+          <i class="bi bi-heart-fill"></i> Soutenir
+        </a>
+        <a href="{{ url_for('privacy') }}" class="nav-link {% if request.endpoint == 'privacy' %}active{% endif %}">
+          <i class="bi bi-shield-lock-fill"></i> Confidentialité
+        </a>
+      </div>
+      <button class="nav-toggle" aria-label="Menu" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="nav-mobile" id="mobileMenu">
+      <a href="{{ url_for('index') }}">Accueil</a>
+      <a href="{{ url_for('donate') }}">Soutenir</a>
+      <a href="{{ url_for('privacy') }}">Confidentialité</a>
+    </div>
+  </nav>
+
+  <!-- Main content -->
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Ad Banner (top of footer) -->
+  <div class="ad-banner">
+    <div class="ad-label">Publicité</div>
+    <!-- AdSense: remplacer les valeurs par vos vraies infos -->
+    <!--
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+         data-ad-slot="XXXXXXXXXX"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    -->
+    <div class="ad-placeholder">
+      <i class="bi bi-display"></i>
+      <span>Espace publicitaire — Google AdSense</span>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="logo-icon"><i class="bi bi-file-earmark-pdf-fill"></i></span>
+        <span class="logo-text">PDF<span class="logo-accent">ix</span></span>
+        <p>Conversion PDF gratuite &amp; sécurisée</p>
+      </div>
+      <div class="footer-links">
+        <a href="{{ url_for('index') }}">Accueil</a>
+        <a href="{{ url_for('donate') }}">Faire un don</a>
+        <a href="{{ url_for('privacy') }}">Confidentialité</a>
+      </div>
+      <div class="footer-copy">
+        <p>© {{ now.year if now else 2025 }} PDFix · Aucun fichier stocké · Conversion 100 % privée</p>
+        <div class="footer-badges">
+          <span class="badge"><i class="bi bi-shield-check"></i> HTTPS</span>
+          <span class="badge"><i class="bi bi-trash"></i> Auto-suppression</span>
+          <span class="badge"><i class="bi bi-lock"></i> Sécurisé</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JS -->
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

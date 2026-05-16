@@ -1,0 +1,194 @@
+{% extends "base.html" %}
+
+{% block title %}PDFix — Convertissez vos fichiers en PDF gratuitement{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="hero-orb hero-orb-1"></div>
+    <div class="hero-orb hero-orb-2"></div>
+    <div class="hero-grid"></div>
+  </div>
+  <div class="hero-inner">
+    <div class="hero-badge">
+      <i class="bi bi-shield-check-fill"></i>
+      <span>100 % gratuit · Aucun fichier conservé · Sécurisé</span>
+    </div>
+    <h1 class="hero-title">
+      Transformez vos fichiers<br>
+      <span class="gradient-text">en PDF instantanément</span>
+    </h1>
+    <p class="hero-subtitle">
+      Images, Word, texte, HTML, CSV → PDF en quelques secondes.<br>
+      Vos fichiers sont supprimés automatiquement après conversion.
+    </p>
+
+    <!-- Supported formats -->
+    <div class="format-pills">
+      <span class="pill"><i class="bi bi-file-image"></i> JPG / PNG</span>
+      <span class="pill"><i class="bi bi-file-image"></i> WEBP / GIF</span>
+      <span class="pill"><i class="bi bi-file-word"></i> DOCX / DOC</span>
+      <span class="pill"><i class="bi bi-file-text"></i> TXT</span>
+      <span class="pill"><i class="bi bi-filetype-html"></i> HTML</span>
+      <span class="pill"><i class="bi bi-file-spreadsheet"></i> CSV</span>
+    </div>
+  </div>
+</section>
+
+<!-- Ad Banner (mid-page) -->
+<div class="ad-section">
+  <div class="ad-label">Publicité</div>
+  <!--
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+       data-ad-slot="XXXXXXXXXX"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  -->
+  <div class="ad-placeholder">
+    <i class="bi bi-display"></i>
+    <span>Espace publicitaire — Google AdSense</span>
+  </div>
+</div>
+
+<!-- Converter Section -->
+<section class="converter-section">
+  <div class="container">
+
+    <!-- CSRF Token -->
+    <input type="hidden" id="csrf_token" value="{{ csrf_token() }}">
+
+    <!-- Drop Zone -->
+    <div class="converter-card" id="converterCard">
+      <div class="drop-zone" id="dropZone">
+        <div class="drop-icon" id="dropIcon">
+          <i class="bi bi-cloud-arrow-up-fill"></i>
+        </div>
+        <div class="drop-text" id="dropText">
+          <h2>Glissez votre fichier ici</h2>
+          <p>ou cliquez pour sélectionner</p>
+        </div>
+        <div class="drop-info">
+          <span><i class="bi bi-info-circle"></i> Max 20 Mo · JPG, PNG, WEBP, GIF, BMP, TXT, HTML, DOCX, CSV</span>
+        </div>
+        <input type="file" id="fileInput" class="file-input" accept=".jpg,.jpeg,.png,.gif,.webp,.bmp,.tiff,.txt,.html,.htm,.docx,.doc,.csv">
+      </div>
+
+      <!-- File Preview -->
+      <div class="file-preview" id="filePreview" style="display:none">
+        <div class="file-preview-icon" id="filePreviewIcon">
+          <i class="bi bi-file-earmark"></i>
+        </div>
+        <div class="file-preview-info">
+          <span class="file-name" id="fileName">fichier.jpg</span>
+          <span class="file-size" id="fileSize">0 Ko</span>
+        </div>
+        <button class="file-remove" id="fileRemove" aria-label="Supprimer">
+          <i class="bi bi-x-circle-fill"></i>
+        </button>
+      </div>
+
+      <!-- Convert Button -->
+      <button class="btn-convert" id="convertBtn" disabled>
+        <span class="btn-text"><i class="bi bi-arrow-right-circle-fill"></i> Convertir en PDF</span>
+        <span class="btn-loading" style="display:none">
+          <span class="spinner"></span> Conversion en cours…
+        </span>
+      </button>
+
+      <!-- Progress Bar -->
+      <div class="progress-wrap" id="progressWrap" style="display:none">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+
+      <!-- Result -->
+      <div class="result-box" id="resultBox" style="display:none">
+        <div class="result-icon"><i class="bi bi-check-circle-fill"></i></div>
+        <div class="result-text">
+          <strong>Conversion réussie !</strong>
+          <p>Votre PDF est prêt. Le fichier sera supprimé dans 5 minutes.</p>
+        </div>
+        <a class="btn-download" id="downloadLink" href="#" target="_blank">
+          <i class="bi bi-download"></i> Télécharger le PDF
+        </a>
+      </div>
+
+      <!-- Error Box -->
+      <div class="error-box" id="errorBox" style="display:none">
+        <i class="bi bi-exclamation-triangle-fill"></i>
+        <span id="errorMsg">Une erreur est survenue.</span>
+      </div>
+    </div>
+
+    <!-- Security notice -->
+    <div class="security-strip">
+      <div class="security-item">
+        <i class="bi bi-shield-lock-fill"></i>
+        <span>Connexion chiffrée HTTPS</span>
+      </div>
+      <div class="security-item">
+        <i class="bi bi-trash3-fill"></i>
+        <span>Fichiers supprimés en &lt; 5 min</span>
+      </div>
+      <div class="security-item">
+        <i class="bi bi-eye-slash-fill"></i>
+        <span>Aucun accès à vos fichiers</span>
+      </div>
+      <div class="security-item">
+        <i class="bi bi-server"></i>
+        <span>Zéro stockage permanent</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How it works -->
+<section class="how-section">
+  <div class="container">
+    <h2 class="section-title">Comment ça marche ?</h2>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">01</div>
+        <div class="step-icon"><i class="bi bi-upload"></i></div>
+        <h3>Chargez votre fichier</h3>
+        <p>Glissez-déposez ou sélectionnez votre fichier (max 20 Mo).</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">02</div>
+        <div class="step-icon"><i class="bi bi-gear-wide-connected"></i></div>
+        <h3>Conversion automatique</h3>
+        <p>Notre serveur convertit votre fichier en PDF en quelques secondes.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">03</div>
+        <div class="step-icon"><i class="bi bi-download"></i></div>
+        <h3>Téléchargez</h3>
+        <p>Récupérez votre PDF. Le fichier source est immédiatement supprimé.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Ad Banner (bottom) -->
+<div class="ad-section">
+  <div class="ad-label">Publicité</div>
+  <!--
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+       data-ad-slot="XXXXXXXXXX"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  -->
+  <div class="ad-placeholder">
+    <i class="bi bi-display"></i>
+    <span>Espace publicitaire — Google AdSense</span>
+  </div>
+</div>
+
+{% endblock %}

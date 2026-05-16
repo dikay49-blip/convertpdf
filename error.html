@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Erreur {{ code }} — PDFix{% endblock %}
+{% block content %}
+<section class="error-page">
+  <div class="hero-bg">
+    <div class="hero-orb hero-orb-1"></div>
+  </div>
+  <div class="error-inner">
+    <div class="error-code">{{ code }}</div>
+    <h1>{{ msg }}</h1>
+    <p>Quelque chose ne s'est pas passé comme prévu.</p>
+    <a href="{{ url_for('index') }}" class="btn-convert" style="display:inline-flex;width:auto;padding:1rem 2.5rem">
+      <i class="bi bi-house-fill"></i>&nbsp; Retour à l'accueil
+    </a>
+  </div>
+</section>
+{% endblock %}

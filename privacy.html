@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block title %}Politique de Confidentialité — PDFix{% endblock %}
+{% block og_title %}Politique de Confidentialité — PDFix{% endblock %}
+
+{% block content %}
+
+<section class="page-hero page-hero--privacy">
+  <div class="hero-bg">
+    <div class="hero-orb hero-orb-1"></div>
+  </div>
+  <div class="hero-inner">
+    <div class="hero-badge">
+      <i class="bi bi-shield-lock-fill"></i>
+      <span>Votre vie privée est notre priorité</span>
+    </div>
+    <h1 class="hero-title"><span class="gradient-text">Confidentialité</span></h1>
+    <p class="hero-subtitle">Dernière mise à jour : {{ now.strftime('%d %B %Y') if now else '1er janvier 2025' }}</p>
+  </div>
+</section>
+
+<section class="legal-section">
+  <div class="container container--narrow">
+
+    <div class="legal-toc">
+      <h3><i class="bi bi-list-ul"></i> Sommaire</h3>
+      <ol>
+        <li><a href="#collect">Données collectées</a></li>
+        <li><a href="#files">Vos fichiers</a></li>
+        <li><a href="#deletion">Suppression automatique</a></li>
+        <li><a href="#cookies">Cookies &amp; publicité</a></li>
+        <li><a href="#gdpr">Droits RGPD</a></li>
+        <li><a href="#security">Sécurité</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ol>
+    </div>
+
+    <div class="legal-body">
+
+      <!-- 1 -->
+      <h2 id="collect"><i class="bi bi-database"></i> 1. Données collectées</h2>
+      <p>PDFix collecte un minimum de données pour fonctionner :</p>
+      <ul>
+        <li><strong>Logs serveur :</strong> adresse IP, navigateur, date/heure de la requête. Ces données sont conservées au maximum <strong>7 jours</strong> pour des raisons de sécurité (détection d'abus).</li>
+        <li><strong>Aucune création de compte</strong> n'est requise. Nous ne collectons ni nom, ni e-mail, ni aucune donnée personnelle identifiable.</li>
+        <li><strong>Aucun cookie de traçage</strong> ne vous suit d'un site à l'autre, sauf ceux des partenaires publicitaires (voir §4).</li>
+      </ul>
+
+      <!-- 2 -->
+      <h2 id="files"><i class="bi bi-file-earmark-lock"></i> 2. Vos fichiers</h2>
+      <p>Les fichiers que vous uploadez pour conversion sont traités de la manière suivante :</p>
+      <ul>
+        <li>Ils sont stockés temporairement sur notre serveur dans un répertoire <strong>isolé</strong> et accessible uniquement par le processus de conversion.</li>
+        <li>Chaque fichier reçoit un <strong>identifiant unique aléatoire</strong> (UUID 128 bits) : personne d'autre que vous ne peut y accéder.</li>
+        <li>Le fichier source est supprimé <strong>immédiatement</strong> après la conversion.</li>
+        <li>Le PDF généré est supprimé <strong>dès que vous le téléchargez</strong>, ou au plus tard <strong>5 minutes</strong> après sa création.</li>
+        <li><strong>Aucun employé, aucun tiers</strong> n'accède à vos fichiers. La conversion est entièrement automatisée.</li>
+      </ul>
+
+      <!-- 3 — IMPORTANTE pour Google -->
+      <div class="legal-highlight">
+        <i class="bi bi-trash3-fill"></i>
+        <div>
+          <h2 id="deletion" style="margin:0 0 0.5rem">3. Suppression automatique — Garantie</h2>
+          <p style="margin:0">
+            PDFix garantit qu'<strong>aucun fichier n'est stocké de façon permanente</strong> sur nos serveurs.
+            Un processus automatique s'exécute toutes les 60 secondes et supprime tout fichier de plus de 5 minutes.
+            Le téléchargement du PDF déclenche également sa suppression immédiate (délai : 5 secondes après envoi).
+            <strong>Il est techniquement impossible de récupérer vos fichiers après conversion.</strong>
+          </p>
+        </div>
+      </div>
+
+      <!-- 4 -->
+      <h2 id="cookies"><i class="bi bi-browser-chrome"></i> 4. Cookies &amp; Publicité</h2>
+      <p>PDFix utilise <strong>Google AdSense</strong> pour afficher des publicités et financer le service gratuit. Google peut utiliser des cookies pour :</p>
+      <ul>
+        <li>Personnaliser les annonces selon vos centres d'intérêt.</li>
+        <li>Mesurer les performances publicitaires.</li>
+      </ul>
+      <p>Vous pouvez refuser la personnalisation des annonces sur <a href="https://adssettings.google.com/" target="_blank" rel="noopener">adssettings.google.com</a>. Pour plus d'informations, consultez la <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">politique de confidentialité de Google</a>.</p>
+      <p>Nous utilisons également un <strong>cookie de session sécurisé</strong> (HttpOnly, SameSite=Lax) pour la protection CSRF. Ce cookie ne contient aucune donnée personnelle et expire à la fermeture du navigateur.</p>
+
+      <!-- 5 -->
+      <h2 id="gdpr"><i class="bi bi-person-check"></i> 5. Vos droits (RGPD)</h2>
+      <p>Conformément au Règlement Général sur la Protection des Données (RGPD) :</p>
+      <ul>
+        <li><strong>Droit d'accès :</strong> vous pouvez demander quelles données nous détenons sur vous.</li>
+        <li><strong>Droit à l'effacement :</strong> vos fichiers étant supprimés automatiquement, il n'y a généralement rien à effacer.</li>
+        <li><strong>Droit d'opposition :</strong> vous pouvez refuser les cookies publicitaires (voir §4).</li>
+        <li><strong>Droit de portabilité :</strong> nous ne conservons pas de données personnelles à transférer.</li>
+      </ul>
+      <p>Pour exercer ces droits, contactez-nous à l'adresse indiquée en §7.</p>
+
+      <!-- 6 -->
+      <h2 id="security"><i class="bi bi-shield-fill-check"></i> 6. Sécurité technique</h2>
+      <p>PDFix implémente les mesures de sécurité suivantes :</p>
+      <ul>
+        <li><strong>HTTPS obligatoire</strong> (TLS 1.2+) avec HSTS activé.</li>
+        <li><strong>Content Security Policy (CSP)</strong> stricte pour prévenir les injections XSS.</li>
+        <li><strong>Protection CSRF</strong> sur tous les formulaires.</li>
+        <li><strong>Limitation de débit</strong> (rate limiting) : 10 conversions/minute par IP.</li>
+        <li><strong>Validation MIME</strong> : chaque fichier est analysé par ses octets magiques, pas seulement son extension.</li>
+        <li><strong>Noms de fichiers aléatoires</strong> : impossibilité de deviner les fichiers d'autres utilisateurs.</li>
+        <li><strong>Prévention des traversées de chemin</strong> (path traversal) sur toutes les opérations fichiers.</li>
+        <li><strong>En-têtes de sécurité HTTP</strong> : X-Content-Type-Options, X-Frame-Options, Referrer-Policy.</li>
+      </ul>
+
+      <!-- 7 -->
+      <h2 id="contact"><i class="bi bi-envelope"></i> 7. Contact</h2>
+      <p>Pour toute question relative à cette politique ou à vos données personnelles :</p>
+      <div class="contact-box">
+        <i class="bi bi-envelope-fill"></i>
+        <span>contact@pdfixconvert.com <!-- Remplacez par votre e-mail --></span>
+      </div>
+      <p>Nous nous engageons à répondre dans un délai de <strong>72 heures</strong>.</p>
+
+    </div>
+
+  </div>
+</section>
+
+{% endblock %}
