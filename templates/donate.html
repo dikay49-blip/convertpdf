@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+
+{% block title %}Soutenir PDFix — Faire un don{% endblock %}
+{% block og_title %}Soutenir PDFix — Faire un don via PayPal{% endblock %}
+
+{% block content %}
+
+<section class="page-hero page-hero--donate">
+  <div class="hero-bg">
+    <div class="hero-orb hero-orb-1"></div>
+    <div class="hero-orb hero-orb-2"></div>
+  </div>
+  <div class="hero-inner">
+    <div class="hero-badge">
+      <i class="bi bi-heart-fill"></i>
+      <span>Votre soutien compte énormément</span>
+    </div>
+    <h1 class="hero-title">Soutenez <span class="gradient-text">PDFix</span></h1>
+    <p class="hero-subtitle">
+      PDFix est entièrement gratuit et sans abonnement.<br>
+      Si vous aimez le service, un petit don aide à maintenir les serveurs en ligne.
+    </p>
+  </div>
+</section>
+
+<section class="donate-section">
+  <div class="container container--narrow">
+
+    <!-- Why donate -->
+    <div class="why-donate">
+      <div class="why-item">
+        <i class="bi bi-server"></i>
+        <div>
+          <strong>Hébergement</strong>
+          <p>Coûts de serveur pour que le service reste disponible 24h/24.</p>
+        </div>
+      </div>
+      <div class="why-item">
+        <i class="bi bi-code-slash"></i>
+        <div>
+          <strong>Développement</strong>
+          <p>Nouvelles fonctionnalités, corrections de bugs, améliorations.</p>
+        </div>
+      </div>
+      <div class="why-item">
+        <i class="bi bi-shield-check"></i>
+        <div>
+          <strong>Sécurité</strong>
+          <p>Maintien des librairies et des protections à jour.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PayPal Donation Card -->
+    <div class="donate-card">
+      <div class="donate-card-header">
+        <i class="bi bi-paypal" style="font-size:2.5rem; color: #009cde;"></i>
+        <h2>Faire un don via PayPal</h2>
+        <p>Sécurisé · Rapide · Aucun compte requis</p>
+      </div>
+
+      <!-- Montant suggérés -->
+      <div class="donate-amounts" id="donateAmounts">
+        <button class="amount-btn" data-amount="2">2 €</button>
+        <button class="amount-btn active" data-amount="5">5 €</button>
+        <button class="amount-btn" data-amount="10">10 €</button>
+        <button class="amount-btn" data-amount="20">20 €</button>
+        <div class="amount-custom-wrap">
+          <span>€</span>
+          <input type="number" id="customAmount" placeholder="Autre montant" min="1" max="500">
+        </div>
+      </div>
+
+      <!-- PayPal Button -->
+      <!-- ⬇⬇⬇  REMPLACEZ l'URL ci-dessous par votre lien PayPal.me ⬇⬇⬇ -->
+      <!-- Format: https://www.paypal.com/donate?hosted_button_id=VOTRE_ID -->
+      <!-- Ou:      https://paypal.me/VOTRE_PSEUDO                          -->
+      <a href="#" id="paypalDonateBtn" class="btn-paypal" target="_blank" rel="noopener noreferrer">
+        <img src="https://www.paypalobjects.com/webstatic/mktg/Logo/pp-logo-100px.png" alt="PayPal" height="28">
+        <span>Faire un don de <strong id="donateAmountDisplay">5 €</strong></span>
+      </a>
+
+      <p class="donate-disclaimer">
+        <i class="bi bi-lock-fill"></i>
+        Paiement sécurisé par PayPal. PDFix ne voit ni ne stocke vos informations bancaires.
+      </p>
+    </div>
+
+    <!-- Thank you message -->
+    <div class="thank-you-box">
+      <i class="bi bi-stars"></i>
+      <p>Merci à tous ceux qui soutiennent PDFix ! Votre aide permet de garder le service gratuit et sans publicité intrusive.</p>
+    </div>
+
+  </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// PayPal donation amount logic
+const BASE_PAYPAL_URL = "https://paypal.me/VOTRE_PSEUDO/"; // ← REMPLACEZ ICI
+
+const amountBtns = document.querySelectorAll('.amount-btn');
+const customInput = document.getElementById('customAmount');
+const display = document.getElementById('donateAmountDisplay');
+const paypalBtn = document.getElementById('paypalDonateBtn');
+
+let selectedAmount = 5;
+
+function updatePayPal(amount) {
+  selectedAmount = parseFloat(amount) || 5;
+  display.textContent = selectedAmount + ' €';
+  paypalBtn.href = BASE_PAYPAL_URL + selectedAmount + 'EUR';
+}
+
+amountBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    amountBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    customInput.value = '';
+    updatePayPal(btn.dataset.amount);
+  });
+});
+
+customInput.addEventListener('input', () => {
+  if (customInput.value) {
+    amountBtns.forEach(b => b.classList.remove('active'));
+    updatePayPal(customInput.value);
+  }
+});
+
+updatePayPal(5);
+</script>
+{% endblock %}
