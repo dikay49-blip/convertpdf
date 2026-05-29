@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+{% block title %}Guide PDF — Conseils & Astuces | PDFix{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="hero-bg"><div class="hero-orb hero-orb-1"></div><div class="hero-orb hero-orb-2"></div></div>
+  <div class="hero-inner">
+    <div class="hero-badge"><i class="bi bi-book-fill"></i><span>Guides & Conseils</span></div>
+    <h1 class="hero-title">Tout savoir sur <span class="gradient-text">les fichiers PDF</span></h1>
+    <p class="hero-subtitle">Conseils pratiques pour gérer, convertir et envoyer vos documents comme un pro.</p>
+  </div>
+</section>
+
+<section class="guide-section">
+  <div class="container">
+
+    <div class="guide-grid">
+
+      <!-- Article 1 -->
+      <article class="guide-card" id="pourquoi-pdf">
+        <div class="guide-card-header">
+          <div class="guide-icon"><i class="bi bi-file-earmark-pdf-fill"></i></div>
+          <div class="guide-meta">
+            <span class="guide-tag">Débutant</span>
+            <span class="guide-read"><i class="bi bi-clock"></i> 3 min de lecture</span>
+          </div>
+        </div>
+        <h2>Pourquoi convertir ses fichiers en PDF ?</h2>
+        <p>Le format PDF (Portable Document Format) est aujourd'hui le standard universel pour partager des documents. Que vous envoyiez un CV, une facture, un contrat ou une photo, le PDF garantit que votre fichier s'affiche exactement comme vous l'avez conçu — sur n'importe quel appareil, n'importe quel système d'exploitation.</p>
+        <h3>Les 5 avantages du PDF</h3>
+        <ul>
+          <li><strong>Universel :</strong> lisible sur Windows, Mac, iPhone, Android sans logiciel spécial.</li>
+          <li><strong>Fidèle :</strong> mise en page, polices et images restent intactes à l'ouverture.</li>
+          <li><strong>Professionnel :</strong> les recruteurs, banques et administrations exigent souvent ce format.</li>
+          <li><strong>Compact :</strong> un PDF est généralement plus léger qu'un fichier Word ou une image brute.</li>
+          <li><strong>Sécurisé :</strong> il est difficile de modifier un PDF sans logiciel dédié.</li>
+        </ul>
+        <h3>Quand convertir en PDF ?</h3>
+        <p>Convertissez en PDF avant d'envoyer un CV, une facture client, un formulaire administratif, un devis ou tout document que vous ne souhaitez pas voir modifié par le destinataire. C'est aussi le format recommandé pour les pièces jointes email importantes.</p>
+        <p>Avec PDFix, la conversion est instantanée : glissez votre fichier, cliquez sur "Convertir" et téléchargez votre PDF en quelques secondes. Aucune inscription, aucun logiciel à installer.</p>
+        <a href="{{ url_for('index') }}" class="guide-cta"><i class="bi bi-arrow-right-circle-fill"></i> Convertir un fichier maintenant</a>
+      </article>
+
+      <!-- Article 2 -->
+      <article class="guide-card" id="documents-pro">
+        <div class="guide-card-header">
+          <div class="guide-icon"><i class="bi bi-briefcase-fill"></i></div>
+          <div class="guide-meta">
+            <span class="guide-tag">Pratique</span>
+            <span class="guide-read"><i class="bi bi-clock"></i> 4 min de lecture</span>
+          </div>
+        </div>
+        <h2>Comment envoyer des documents professionnels sans erreur ?</h2>
+        <p>Envoyer le mauvais format de fichier peut nuire à votre image professionnelle. Un CV en .pages qui ne s'ouvre pas sur Windows, une photo floue à la place d'un document clair, une mise en page qui se décale à l'ouverture — ces erreurs sont évitables en adoptant quelques bonnes pratiques.</p>
+        <h3>Règle n°1 : toujours envoyer en PDF</h3>
+        <p>Quel que soit votre logiciel de traitement de texte (Word, LibreOffice, Google Docs), exportez toujours en PDF avant d'envoyer. Cela garantit que le destinataire voit exactement ce que vous avez créé, sans dépendre de sa version du logiciel.</p>
+        <h3>Règle n°2 : nommez correctement vos fichiers</h3>
+        <p>Évitez les noms génériques comme "document.pdf" ou "scan001.pdf". Préférez un format clair : "CV_Prénom_Nom_2025.pdf" ou "Facture_ClientABC_Janvier2025.pdf". Cela facilite le classement pour vous et votre interlocuteur.</p>
+        <h3>Règle n°3 : vérifiez le poids du fichier</h3>
+        <p>La plupart des services email bloquent les pièces jointes au-delà de 10 Mo. Si votre PDF est trop lourd (souvent à cause d'images haute résolution), convertissez d'abord vos images en JPEG avant de les mettre en PDF — cela réduit considérablement la taille finale.</p>
+        <h3>Formats acceptés sur PDFix</h3>
+        <p>PDFix prend en charge les formats les plus courants : images (JPG, PNG, WEBP, GIF, BMP), documents Word (DOC, DOCX), texte brut (TXT), pages web (HTML) et tableaux (CSV). La conversion est gratuite et sans limite d'utilisation quotidienne raisonnable.</p>
+        <a href="{{ url_for('index') }}" class="guide-cta"><i class="bi bi-arrow-right-circle-fill"></i> Essayer PDFix gratuitement</a>
+      </article>
+
+      <!-- Article 3 -->
+      <article class="guide-card" id="formats-fichiers">
+        <div class="guide-card-header">
+          <div class="guide-icon"><i class="bi bi-folder2-fill"></i></div>
+          <div class="guide-meta">
+            <span class="guide-tag">Technique</span>
+            <span class="guide-read"><i class="bi bi-clock"></i> 5 min de lecture</span>
+          </div>
+        </div>
+        <h2>Les formats de fichiers expliqués simplement</h2>
+        <p>JPG, PNG, DOCX, CSV, HTML… les extensions de fichiers peuvent sembler mystérieuses. Voici un guide simple pour comprendre à quoi sert chaque format et quand utiliser PDFix pour les convertir en PDF.</p>
+        <h3>JPG / JPEG — Les photos</h3>
+        <p>Le format le plus répandu pour les photos numériques. Idéal pour les images avec beaucoup de couleurs (paysages, portraits). Légèrement compressé, ce qui peut réduire la qualité si on le sauvegarde trop souvent. Pour envoyer une photo par email de façon professionnelle, convertissez-la en PDF avec PDFix.</p>
+        <h3>PNG — Les images avec transparence</h3>
+        <p>Meilleur que le JPG pour les logos, captures d'écran et illustrations. Préserve la transparence et ne perd pas en qualité à la compression. Pour inclure un logo PNG dans un document officiel, convertissez-le en PDF.</p>
+        <h3>DOCX — Les documents Word</h3>
+        <p>Format natif de Microsoft Word. Modifiable facilement, mais la mise en page peut varier selon la version de Word utilisée. Convertissez toujours en PDF avant d'envoyer un document Word important : CV, lettre de motivation, contrat.</p>
+        <h3>CSV — Les tableaux de données</h3>
+        <p>Format simple pour les données tabulaires (listes, bases de données, exports de comptabilité). S'ouvre dans Excel ou LibreOffice Calc. Pratique mais peu lisible pour un non-initié. Convertissez en PDF pour partager un tableau de façon claire et propre.</p>
+        <h3>HTML — Les pages web</h3>
+        <p>Format des pages internet. Si vous avez une page web ou un email HTML que vous souhaitez archiver ou partager en document fixe, PDFix peut le convertir en PDF en conservant la structure visuelle.</p>
+        <h3>TXT — Le texte brut</h3>
+        <p>Le format le plus simple qui soit : du texte sans mise en forme. Utilisé pour les notes, les logs système et les scripts. PDFix le met en forme proprement dans un PDF avec des marges et une typographie lisible.</p>
+        <a href="{{ url_for('index') }}" class="guide-cta"><i class="bi bi-arrow-right-circle-fill"></i> Convertir mon fichier en PDF</a>
+      </article>
+
+      <!-- Article 4 -->
+      <article class="guide-card" id="securite-fichiers">
+        <div class="guide-card-header">
+          <div class="guide-icon"><i class="bi bi-shield-lock-fill"></i></div>
+          <div class="guide-meta">
+            <span class="guide-tag">Sécurité</span>
+            <span class="guide-read"><i class="bi bi-clock"></i> 3 min de lecture</span>
+          </div>
+        </div>
+        <h2>Vos fichiers sont-ils en sécurité sur PDFix ?</h2>
+        <p>La confidentialité de vos documents est une priorité. Que vous convertissiez un contrat, un bulletin de salaire ou un document médical, vous avez le droit de savoir exactement ce qu'il advient de vos fichiers.</p>
+        <h3>Suppression automatique en moins de 5 minutes</h3>
+        <p>Dès que vous uploadez un fichier sur PDFix, un identifiant unique et aléatoire lui est attribué. Personne d'autre que vous ne peut accéder à votre fichier. Le fichier source est supprimé immédiatement après la conversion, et le PDF généré est supprimé automatiquement dans les 5 minutes suivant sa création — ou dès que vous le téléchargez.</p>
+        <h3>Zéro stockage permanent</h3>
+        <p>PDFix ne conserve aucun fichier sur ses serveurs de façon permanente. Il n'existe aucune base de données de documents. Un processus automatique tourne en permanence pour s'assurer qu'aucun fichier ne reste au-delà de 5 minutes, même en cas d'incident.</p>
+        <h3>Connexion chiffrée HTTPS</h3>
+        <p>Toutes les données échangées entre votre navigateur et PDFix sont chiffrées via HTTPS (TLS 1.2+). Cela signifie que personne ne peut intercepter vos fichiers pendant leur transfert.</p>
+        <h3>Aucune inscription requise</h3>
+        <p>PDFix ne vous demande ni email, ni mot de passe, ni aucune information personnelle. Aucun compte n'est créé, aucune donnée personnelle n'est stockée. Vous convertissez, vous téléchargez, c'est tout.</p>
+        <a href="{{ url_for('privacy') }}" class="guide-cta"><i class="bi bi-arrow-right-circle-fill"></i> Lire la politique de confidentialité</a>
+      </article>
+
+    </div>
+
+  </div>
+</section>
+
+<style>
+.guide-section{padding:3rem 0 5rem}
+.guide-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(460px,1fr));gap:2rem}
+.guide-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-xl);padding:2rem 2.5rem;backdrop-filter:blur(12px)}
+.guide-card-header{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem}
+.guide-icon{width:48px;height:48px;background:rgba(108,99,255,.15);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:var(--accent);flex-shrink:0}
+.guide-meta{display:flex;gap:.75rem;align-items:center;flex-wrap:wrap}
+.guide-tag{background:rgba(108,99,255,.15);color:var(--accent);border-radius:100px;padding:.25rem .75rem;font-size:.78rem;font-weight:600}
+.guide-read{font-size:.8rem;color:var(--text-3);display:flex;align-items:center;gap:.3rem}
+.guide-card h2{font-family:var(--font-display);font-size:1.35rem;font-weight:700;margin-bottom:1rem;color:var(--text)}
+.guide-card h3{font-family:var(--font-display);font-size:1rem;font-weight:700;margin:1.5rem 0 .5rem;color:var(--text)}
+.guide-card p{color:var(--text-2);font-size:.92rem;line-height:1.75;margin-bottom:.75rem}
+.guide-card ul{color:var(--text-2);font-size:.92rem;line-height:1.75;padding-left:1.25rem;margin-bottom:.75rem}
+.guide-card li{margin-bottom:.4rem}
+.guide-card strong{color:var(--text)}
+.guide-cta{display:inline-flex;align-items:center;gap:.5rem;margin-top:1.25rem;background:linear-gradient(135deg,var(--accent),#8b5cf6);color:#fff;border-radius:var(--radius);padding:.7rem 1.5rem;font-size:.9rem;font-weight:700;text-decoration:none;transition:all .3s}
+.guide-cta:hover{transform:translateY(-2px);opacity:1;box-shadow:0 6px 20px rgba(108,99,255,.4)}
+@media(max-width:768px){.guide-grid{grid-template-columns:1fr}.guide-card{padding:1.5rem}}
+</style>
+{% endblock %}
