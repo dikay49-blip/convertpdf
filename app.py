@@ -1,7 +1,7 @@
 import os, uuid, threading, time, logging, mimetypes
 from pathlib import Path
 from datetime import datetime
-from flask import Flask, render_template, request, send_file, jsonify, abort, send_from_directory
+from flask import Flask, render_template, request, send_file, jsonify, abort, send_from_directory, Response
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from flask_wtf.csrf import CSRFProtect
@@ -23,14 +23,14 @@ app.config['WTF_CSRF_TIME_LIMIT'] = 3600
 
 UPLOAD_FOLDER = Path('uploads')
 UPLOAD_FOLDER.mkdir(exist_ok=True)
+SITE_URL = os.environ.get('SITE_URL', 'https://convertpdf-ezqw.onrender.com')
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s %(message)s')
 logger = logging.getLogger(__name__)
 
 csrf = CSRFProtect(app)
 limiter = Limiter(get_remote_address, app=app,
-    default_limits=["200 per day", "50 per hour"],
-    storage_uri="memory://")
+    default_limits=["200 per day", "50 per hour"], storage_uri="memory://")
 
 ALLOWED_MIME = {
     'image/jpeg':'image','image/png':'image','image/gif':'image',
@@ -45,10 +45,27 @@ ALLOWED_EXT = {'.jpg','.jpeg','.png','.gif','.webp','.bmp','.tiff',
 TEXT_EXT = {'.txt':'text/plain','.html':'text/html','.htm':'text/html','.csv':'text/csv'}
 
 @app.after_request
-def add_headers(r):
-    r.headers['X-Content-Type-Options'] = 'nosniff'
-    r.headers['X-Frame-Options'] = 'SAMEORIGIN'
-    r.headers['Referrer-Policy'] = 'strict-origin-when-cross-origin'
+def add_security_headers(r):
+    r.headers['X-Content-Type-Options']    = 'nosniff'
+    r.headers['X-Frame-Options']           = 'SAMEORIGIN'
+    r.headers['X-XSS-Protection']          = '1; mode=block'
+    r.headers['Referrer-Policy']           = 'strict-origin-when-cross-origin'
+    r.headers['Permissions-Policy']        = 'geolocation=(), microphone=(), camera=()'
+    r.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains'
+    r.headers['Content-Security-Policy']   = (
+        "default-src 'self'; "
+        "script-src 'self' 'unsafe-inline' https://pagead2.googlesyndication.com "
+        "https://www.paypal.com https://www.paypalobjects.com https://cdn.jsdelivr.net "
+        "https://partner.googleadservices.com https://tpc.googlesyndication.com; "
+        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; "
+        "font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net; "
+        "img-src 'self' data: https: blob:; "
+        "frame-src https://www.paypal.com https://pagead2.googlesyndication.com "
+        "https://tpc.googlesyndication.com; "
+        "connect-src 'self'; object-src 'none'; base-uri 'self';"
+    )
+    if request.path.startswith('/download/'):
+        r.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, private'
     return r
 
 def auto_delete():
@@ -112,18 +129,26 @@ def html_to_pdf(src, dst):
 
 def docx_to_pdf(src, dst):
     d = docx.Document(str(src))
-    h = ["<html><head><meta charset='utf-8'><style>body{font-family:Arial;font-size:12pt;margin:2cm;}table{border-collapse:collapse;width:100%;}td{border:1px solid #ccc;padding:4px;}</style></head><body>"]
+    h = ["<html><head><meta charset='utf-8'><style>"
+         "body{font-family:Arial;font-size:12pt;margin:2cm;line-height:1.5;}"
+         "h1{font-size:18pt;}h2{font-size:15pt;}h3{font-size:13pt;}"
+         "table{border-collapse:collapse;width:100%;}td,th{border:1px solid #ccc;padding:5px;}"
+         "</style></head><body>"]
     for p in d.paragraphs:
         t = p.text.replace('&','&amp;').replace('<','&lt;').replace('>','&gt;')
+        if not t.strip(): h.append('<br>'); continue
         if p.style.name.startswith('Heading 1'): h.append(f'<h1>{t}</h1>')
         elif p.style.name.startswith('Heading 2'): h.append(f'<h2>{t}</h2>')
-        elif t: h.append(f'<p>{t}</p>')
+        elif p.style.name.startswith('Heading 3'): h.append(f'<h3>{t}</h3>')
+        else: h.append(f'<p>{t}</p>')
     for tbl in d.tables:
         h.append('<table>')
-        for row in tbl.rows:
+        for i,row in enumerate(tbl.rows):
             h.append('<tr>')
+            tag = 'th' if i==0 else 'td'
             for cell in row.cells:
-                h.append(f'<td>{cell.text}</td>')
+                ct = cell.text.replace('&','&amp;').replace('<','&lt;').replace('>','&gt;')
+                h.append(f'<{tag}>{ct}</{tag}>')
             h.append('</tr>')
         h.append('</table>')
     h.append('</body></html>')
@@ -162,14 +187,35 @@ def donate(): return render_template('donate.html')
 @app.route('/privacy')
 def privacy(): return render_template('privacy.html')
 
+@app.route('/guide')
+def guide(): return render_template('guide.html')
+
+@app.route('/about')
+def about(): return render_template('about.html')
+
+@app.route('/robots.txt')
+def robots():
+    return Response(f"User-agent: *\nAllow: /\nDisallow: /convert\nDisallow: /download/\n\nSitemap: {SITE_URL}/sitemap.xml\n", mimetype='text/plain')
+
+@app.route('/sitemap.xml')
+def sitemap():
+    now = datetime.utcnow().strftime('%Y-%m-%d')
+    xml = f"""<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>{SITE_URL}/</loc><lastmod>{now}</lastmod><priority>1.0</priority></url>
+  <url><loc>{SITE_URL}/guide</loc><lastmod>{now}</lastmod><priority>0.9</priority></url>
+  <url><loc>{SITE_URL}/about</loc><lastmod>{now}</lastmod><priority>0.7</priority></url>
+  <url><loc>{SITE_URL}/donate</loc><lastmod>{now}</lastmod><priority>0.5</priority></url>
+  <url><loc>{SITE_URL}/privacy</loc><lastmod>{now}</lastmod><priority>0.4</priority></url>
+</urlset>"""
+    return Response(xml, mimetype='application/xml')
+
 @app.route('/convert', methods=['POST'])
 @limiter.limit("10 per minute")
 def convert():
-    if 'file' not in request.files:
-        return jsonify({'error':'Aucun fichier.'}), 400
+    if 'file' not in request.files: return jsonify({'error':'Aucun fichier.'}), 400
     f = request.files['file']
-    if not f or not f.filename:
-        return jsonify({'error':'Fichier vide.'}), 400
+    if not f or not f.filename: return jsonify({'error':'Fichier vide.'}), 400
     name, mime, err = validate_file(f)
     if err: return jsonify({'error':err}), 400
     uid = uuid.uuid4().hex
@@ -205,7 +251,7 @@ def e404(e): return render_template('error.html', code=404, msg="Page introuvabl
 @app.errorhandler(413)
 def e413(e): return jsonify({'error':'Fichier trop volumineux (max 20 Mo).'}), 413
 @app.errorhandler(429)
-def e429(e): return jsonify({'error':'Trop de requêtes.'}), 429
+def e429(e): return jsonify({'error':'Trop de requêtes. Attends 1 minute.'}), 429
 @app.errorhandler(500)
 def e500(e): return render_template('error.html', code=500, msg="Erreur interne."), 500
 
