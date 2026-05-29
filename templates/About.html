@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block title %}À propos — PDFix{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="hero-bg"><div class="hero-orb hero-orb-1"></div><div class="hero-orb hero-orb-2"></div></div>
+  <div class="hero-inner">
+    <div class="hero-badge"><i class="bi bi-info-circle-fill"></i><span>Notre histoire</span></div>
+    <h1 class="hero-title">À propos de <span class="gradient-text">PDFix</span></h1>
+    <p class="hero-subtitle">Un outil simple, gratuit et respectueux de votre vie privée.</p>
+  </div>
+</section>
+
+<section class="about-section">
+  <div class="container container--narrow">
+
+    <div class="about-block">
+      <div class="about-icon"><i class="bi bi-lightbulb-fill"></i></div>
+      <div>
+        <h2>Pourquoi PDFix existe</h2>
+        <p>PDFix est né d'un constat simple : convertir un fichier en PDF devrait être rapide, gratuit et sans contrainte. La plupart des outils en ligne demandent une inscription, affichent des dizaines de publicités intrusives ou — pire — conservent vos fichiers sur leurs serveurs sans vous le dire clairement.</p>
+        <p>PDFix a été créé pour offrir une alternative honnête : un convertisseur PDF instantané, sans compte, sans abonnement, où vos fichiers sont supprimés automatiquement dans les 5 minutes suivant la conversion.</p>
+      </div>
+    </div>
+
+    <div class="about-block">
+      <div class="about-icon"><i class="bi bi-heart-fill"></i></div>
+      <div>
+        <h2>Notre philosophie</h2>
+        <p>Nous croyons que les outils numériques utiles doivent rester accessibles à tous. PDFix est et restera <strong>100 % gratuit</strong> pour les conversions de base. Le service est financé par une publicité non intrusive via Google AdSense — pas de pop-ups, pas de redirections, pas de traqueurs cachés.</p>
+        <p>Votre vie privée nous tient à cœur. Nous ne collectons ni votre nom, ni votre email, ni aucune donnée personnelle. Vos fichiers ne sont jamais lus par un humain ni conservés après conversion.</p>
+      </div>
+    </div>
+
+    <div class="about-block">
+      <div class="about-icon"><i class="bi bi-cpu-fill"></i></div>
+      <div>
+        <h2>La technologie derrière PDFix</h2>
+        <p>PDFix est développé en Python avec le framework Flask, hébergé sur des serveurs européens. La conversion utilise des librairies open source réputées : <strong>img2pdf</strong> pour les images, <strong>ReportLab</strong> pour les documents texte et CSV, <strong>python-docx</strong> pour les fichiers Word.</p>
+        <p>Chaque fichier uploadé reçoit un identifiant unique aléatoire de 128 bits — il est techniquement impossible pour quiconque de deviner l'URL de votre fichier. La connexion est chiffrée en HTTPS et plusieurs couches de sécurité protègent le serveur contre les attaques courantes.</p>
+      </div>
+    </div>
+
+    <div class="about-block">
+      <div class="about-icon"><i class="bi bi-graph-up-arrow"></i></div>
+      <div>
+        <h2>Ce que PDFix peut faire</h2>
+        <ul class="about-list">
+          <li><i class="bi bi-check-circle-fill"></i> Convertir des images JPG, PNG, WEBP, GIF, BMP en PDF</li>
+          <li><i class="bi bi-check-circle-fill"></i> Convertir des documents Word (.doc, .docx) en PDF</li>
+          <li><i class="bi bi-check-circle-fill"></i> Convertir des fichiers texte (.txt) en PDF mis en forme</li>
+          <li><i class="bi bi-check-circle-fill"></i> Convertir des pages HTML en PDF</li>
+          <li><i class="bi bi-check-circle-fill"></i> Convertir des tableaux CSV en PDF avec mise en page propre</li>
+          <li><i class="bi bi-check-circle-fill"></i> Fichiers jusqu'à 20 Mo</li>
+          <li><i class="bi bi-check-circle-fill"></i> Aucune inscription, aucun compte requis</li>
+          <li><i class="bi bi-check-circle-fill"></i> Suppression automatique des fichiers en moins de 5 minutes</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="about-block">
+      <div class="about-icon"><i class="bi bi-envelope-fill"></i></div>
+      <div>
+        <h2>Nous contacter</h2>
+        <p>Une question, un bug, une suggestion ? Nous lisons tous les messages et répondons dans les 72 heures.</p>
+        <div class="contact-box"><i class="bi bi-envelope-fill"></i><span>contact@pdfixconvert.com</span></div>
+        <p style="margin-top:1rem">Vous pouvez également soutenir le projet en faisant un petit don — cela aide à couvrir les frais de serveur et à améliorer PDFix.</p>
+        <a href="{{ url_for('donate') }}" class="guide-cta" style="margin-top:.75rem"><i class="bi bi-heart-fill"></i> Soutenir PDFix</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+.about-section{padding:3rem 0 5rem}
+.about-block{display:flex;gap:1.5rem;align-items:flex-start;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-xl);padding:2rem;margin-bottom:1.5rem;backdrop-filter:blur(12px)}
+.about-icon{width:52px;height:52px;background:rgba(108,99,255,.15);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:var(--accent);flex-shrink:0;margin-top:.2rem}
+.about-block h2{font-family:var(--font-display);font-size:1.25rem;font-weight:700;margin-bottom:.75rem;color:var(--text)}
+.about-block p{color:var(--text-2);font-size:.92rem;line-height:1.75;margin-bottom:.5rem}
+.about-block strong{color:var(--text)}
+.about-list{list-style:none;padding:0;display:flex;flex-direction:column;gap:.5rem}
+.about-list li{display:flex;align-items:center;gap:.75rem;color:var(--text-2);font-size:.92rem}
+.about-list li i{color:var(--success);font-size:1rem;flex-shrink:0}
+.guide-cta{display:inline-flex;align-items:center;gap:.5rem;margin-top:1.25rem;background:linear-gradient(135deg,var(--accent),#8b5cf6);color:#fff;border-radius:var(--radius);padding:.7rem 1.5rem;font-size:.9rem;font-weight:700;text-decoration:none;transition:all .3s}
+.guide-cta:hover{transform:translateY(-2px);opacity:1;box-shadow:0 6px 20px rgba(108,99,255,.4)}
+@media(max-width:600px){.about-block{flex-direction:column}.about-icon{margin-bottom:.5rem}}
+</style>
+{% endblock %}
