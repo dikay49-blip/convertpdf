@@ -30,7 +30,7 @@ logger = logging.getLogger(__name__)
 
 csrf = CSRFProtect(app)
 limiter = Limiter(get_remote_address, app=app,
-    default_limits=["200 per day", "50 per hour"], storage_uri="memory://")
+default_limits=["1000 per day", "200 per hour"], storage_uri="memory://")
 
 ALLOWED_MIME = {
     'image/jpeg':'image','image/png':'image','image/gif':'image',
